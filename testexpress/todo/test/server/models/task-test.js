@@ -50,7 +50,7 @@ describe('task model tests', function() {
     task.all(callback);
   });
 
-  it.only('get returns task with given id', function(done) {
+  it('get returns task with given id', function(done) {
     var callback = function(err, task) {
       expect(task.name).to.be.eql('task1');
       expect(task.month).to.be.eql(10);
@@ -59,7 +59,7 @@ describe('task model tests', function() {
     task.get('223412341240', callback);
   });
 
-  it.only('returns null for non-existing task', function(done) {
+  it('returns null for non-existing task', function(done) {
     var callback = function(err, task) {
       expect(task).to.be.null;
       done();
