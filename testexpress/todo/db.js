@@ -18,6 +18,10 @@ module.exports = {
       self.connection = db;
       callback(null);
     }
-    MongoClient.connect(dbname, cacheConnection);
+    try {
+      MongoClient.connect(dbname, cacheConnection);
+    } catch(err) {
+      callback(err);
+    }
   }
 }
