@@ -1,0 +1,22 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/paul/.nvm/versions/node/v7.3.0/bin/node',
+1 verbose cli   '/home/paul/.nvm/versions/node/v7.3.0/bin/npm',
+1 verbose cli   'run-script',
+1 verbose cli   'cover' ]
+2 info using npm@4.0.5
+3 info using node@v7.3.0
+4 verbose stack Error: ENOENT: no such file or directory, open '/home/paul/workspace/package.json'
+5 verbose cwd /home/paul/workspace/tdjsa
+6 error Linux 4.8.0-32-generic
+7 error argv "/home/paul/.nvm/versions/node/v7.3.0/bin/node" "/home/paul/.nvm/versions/node/v7.3.0/bin/npm" "run-script" "cover"
+8 error node v7.3.0
+9 error npm  v4.0.5
+10 error path /home/paul/workspace/package.json
+11 error code ENOENT
+12 error errno -2
+13 error syscall open
+14 error enoent ENOENT: no such file or directory, open '/home/paul/workspace/package.json'
+15 error enoent ENOENT: no such file or directory, open '/home/paul/workspace/package.json'
+15 error enoent This is most likely not a problem with npm itself
+15 error enoent and is related to npm not being able to find a file.
+16 verbose exit [ -2, true ]
