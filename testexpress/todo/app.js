@@ -7,8 +7,20 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var tasks = require('./routes/tasks');
 
 var app = express();
+
+app.use('/users', users);
+app.use('/tasks', tasks);
+
+var db = require('./db');
+db.connect('mongodb://localhost/todo', function(err) {
+  if (err) {
+    console.log('unable to connect to the database');
+    throw(err);
+  }
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

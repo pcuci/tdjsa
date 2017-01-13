@@ -20,7 +20,8 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  task.add(req.body, function(err) {
+  console.log('req', req);
+  task.add(req, function(err) {
     if (err) {
       res.send(err.message);
     } else {
