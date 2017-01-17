@@ -202,4 +202,27 @@ describe('tasks-with builtin functions-tests', function() {
     expect(callServiceMock).to.not.be.called;
   });
 
+  it('updateTasks appends delete link', function() {
+    updateTasks(200, responseStub);
+    var expected = '<td><a onclick="deleteTask(\'123412341201\');">delete</a></td>';
+    expect(domElements.tasks.innerHTML).contains(expected);
+  });
+
+  it('deleteTask calls callService', function(done) {
+    sandbox.stub(window, 'callService', function(params) {
+      expect(params.method).to.be.eql('DELETE');
+      expect(params.url).to.be.eql('/tasks/123412341203');
+      done();
+    });
+    deleteTask('123412341203');
+  });
+
+  it('deleteTask registers updateMessage', function() {
+    var callServiceMock = sandbox.mock(window).expects('callService').withArgs(sinon.match.any, updateMessage);
+    deleteTask('123412341203');
+    callServiceMock.verify();
+  });
+
+
+
 });

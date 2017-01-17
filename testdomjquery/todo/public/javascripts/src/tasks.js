@@ -26,6 +26,9 @@ var updateTasks = function(status, response) {
         + '<td>'
         + task.month + '/' + task.day + '/' + task.year
         + '</td>'
+        + '<td>'
+        + '<a onclick="deleteTask(\'' + task._id + '\');">delete</a>'
+        + '</td>'
         + '</tr>';
     }
     var table = '<table>' + tasks.map(row).join('') + '</table>';
@@ -35,6 +38,14 @@ var updateTasks = function(status, response) {
     document.getElementById('message').innerHTML = message;
   }
 };
+
+var deleteTask = function(taskId) {
+  var params = {
+    method: 'DELETE',
+    url: '/tasks/' + taskId
+  }
+  callService(params, updateMessage);
+}
 
 var getTasks = function() {
   var params = {
