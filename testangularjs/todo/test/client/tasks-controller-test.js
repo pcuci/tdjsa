@@ -5,12 +5,15 @@ describe('task controller tests', function() {
   });
 
   var controller;
-  var tasksServiceMock;
+  var tasksServiceMock = {};
+  var documentReadyHandler;
 
   beforeEach(module('todoapp'));
 
-  beforeEach(inject(function($controller) {
-    tasksServiceMock = {};
+  beforeEach(inject(function($controller, $document) {
+    $document.ready = function(handler) {
+      documentReadyHandler = handler;
+    };
 
     controller = $controller('TasksController', {
       TasksService: tasksServiceMock
@@ -88,6 +91,97 @@ describe('task controller tests', function() {
 
     controller.updateTasks(tasksStub);
     expect(controller.tasks).to.be.eql('..sorted..');
+  });
+
+  it('registers getTasks as handler for document ready', function() {
+    expect(documentReadyHandler).to.be.eql(controller.getTasks);
+  });
+
+  it('newTask has empty name and date on create', function() {
+    expect(controller.newTask.name).to.be.eql('');
+    expect(controller.newTask.date).to.be.eql('');
+  });
+
+  it('converts newTask with no data to JSON format', function() {
+    var newTask = controller.convertNewTaskToJSON();
+    expect(newTask.name).to.be.eql('');
+    expect(newTask.month).to.be.NAN;
+    expect(newTask.day).to.be.NAN;
+    expect(newTask.year).to.be.NAN;
+  });
+
+  it('converts newTask with data to JSON format', function() {
+    var newTask = {
+      name: 'task a',
+      date: '6/10/2016'
+    };
+    var newTaskJSON = {
+      name: 'task a',
+      month: 6,
+      day: 10,
+      year: 2016
+    };
+    controller.newTask = newTask;
+    expect(controller.convertNewTaskToJSON()).to.be.eql(newTaskJSON);
+  });
+
+  it('addTask calls the service', function(done) {
+    controller.updateMessage = function() {};
+    controller.updateError = function() {};
+
+    var convertedTask = controller.convertNewTaskToJSON(controller.newTask);
+
+    tasksServiceMock.add = function(task, success, error) {
+      expect(task).to.be.eql(convertedTask);
+      expect(success).to.be.eql(controller.updateMessage);
+      expect(error).to.be.eql(controller.updateError);
+      done();
+    };
+    controller.addTask();
+  });
+
+  it('updateMessage updates message and calls getTasks', function(done) {
+    controller.getTasks = function() {
+      done();
+    };
+    controller.updateMessage('good');
+    expect(controller.message).to.be.eql('good');
+  });
+
+  it('disableAddTask calls validateTask', function() {
+    var newTask = {
+      name: 'task a',
+      date: '6/10/2016'
+    };
+
+    var originalValidateTask = window.validateTask;
+
+    window.validateTask = function(task) {
+      expect(task.name).to.be.eql(newTask.name);
+      expect(task.month + '/' + task.day + '/' + task.year).to.eql(newTask.date);
+      return true;
+    };
+
+    controller.newTask = newTask;
+
+    var resultOfDisableAddTask = controller.disableAddTask();
+    window.validateTask = originalValidateTask;
+    expect(resultOfDisableAddTask).to.be.eql(false);
+  });
+
+  it('deleteTask deletes and registers updateMessage', function(done) {
+    controller.updateMessage = function() {};
+    controller.updateError = function() {};
+
+    var sampleTaskId = '1234123412341234';
+
+    tasksServiceMock.delete = function(taskId, success, error) {
+      expect(taskId).to.be.eql(sampleTaskId);
+      expect(success).to.be.eql(controller.updateMessage);
+      expect(error).to.be.eql(controller.updateError);
+      done();
+    }
+    controller.deleteTask(sampleTaskId);
   });
 
 });
