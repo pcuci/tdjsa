@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}    
+}
 
 .heading {
   font-size: 200%;
@@ -11,14 +11,14 @@ body {
 }
 
 #newtask {
-  float: left;             
+  float: left;
   padding: 10px;
   border-right: 1px solid #A52A2A;
 }
 
-#taskslist { 
+#taskslist {
   width: 80%;
-  float: right;                       
+  float: right;
 }
 
 a {
@@ -26,14 +26,14 @@ a {
 }
 
 label {
-  float: left;  
+  float: left;
   clear: both;
 }
 
 input {
   float: left;
   clear: both;
-}   
+}
 
 #submit {
   margin-top: 10px;

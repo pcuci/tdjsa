@@ -1,0 +1,35 @@
+
+<html data-ng-app="todoapp">
+  <head>
+    <title>TO-DO</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body data-ng-controller="TasksController as controller">
+    <div class="heading">TO-DO</div>
+    <div id="newtask">
+      <div>Create a new task</div>
+      <label>Name</label>
+      <input type="text" data-ng-model="controller.newTask.name"/>
+      <label>Date</label>
+      <input type="text" data-ng-model="controller.newTask.date"/>
+      <input type="submit" id="submit" data-ng-click="controller.addTask();" data-ng-disabled="controller.disableAddTask();" value="create"/>
+    </div>
+  <div id="taskslist">
+    <p>Number of tasks: <span>{{ controller.tasks.length }}</span>
+    <span id="message">{{ controller.message }}</span>
+    <table>
+      <tr data-ng-repeat="task in controller.tasks">
+      <td>{{ task.name }}</td>
+      <td>{{ task.month }}/{{ task.day }}/{{ task.year }}</td>
+      <td>
+        <A data-ng-click="controller.deleteTask(task._id);">delete
+        </A></td>
+    </table>
+  </div>
+  <script src="javascripts/angular.js"></script>
+  <script src="javascripts/src/todoapp.js"></script>
+  <script src="javascripts/src/controllers/tasks-controller.js"></script>
+  <script src="javascripts/src/services/tasks-service.js"></script>
+  <script src="javascripts/common/validate-task.js"></script>
+  </body>
+</html>
