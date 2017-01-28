@@ -16,10 +16,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
 
     files: [
-      'node_modules/angular2/bundles/angular2-polyfills.js',      
+      'node_modules/angular2/bundles/angular2-polyfills.js',
       'node_modules/rxjs/bundles/Rx.umd.js',
       'node_modules/angular2/bundles/angular2-all.umd.js',
       './test/client/**/*.js',
+      './public/src/app/tasks/tasks.compnent.js'
     ],
 
     // list of files to exclude
