@@ -22,7 +22,8 @@ module.exports = function(config) {
       './test/client/**/*.js',
       './public/src/app/tasks/tasks-sort.pipe.js',
       './public/src/app/tasks/tasks.service.js',
-      './public/src/app/tasks/tasks.compnent.js'
+      './public/src/app/tasks/tasks.compnent.js',
+      './public/src/main.js'
     ],
 
     // list of files to exclude
