@@ -20,6 +20,7 @@ module.exports = function(config) {
       'node_modules/rxjs/bundles/Rx.umd.js',
       'node_modules/angular2/bundles/angular2-all.umd.js',
       './test/client/**/*.js',
+      './public/src/app/tasks/tasks.service.js',
       './public/src/app/tasks/tasks.compnent.js'
     ],
 
