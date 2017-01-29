@@ -16,7 +16,10 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+if(app.get('env') !== 'test') {
+  app.use(logger('dev'));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,10 +36,14 @@ app.use('/tasks', tasks);
 //END:ADDED
 
 //START:DB
-var db = require('./db');
+var config = require('.config.json');
+var dburl = config[app.get('env')].dburl;
 
-db.connect('mongodb://localhost/todo', function(err) {
-  if(err) {
+console.log('using database: ', dburl);
+
+var db = require('./db');
+db.connect(dburl, function(err) {
+  if (err) {
     console.log("unable to connect to the database");
     throw(err);
   }

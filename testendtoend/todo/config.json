@@ -1,0 +1,11 @@
+{
+  "development": {
+    "dburl": "mongodb://localhost/todo"
+  },
+  "test": {
+    "dburl": "mongodb://localhost/todouitest"
+  },
+  "production": {
+    "dburl": "..."
+  }
+}
