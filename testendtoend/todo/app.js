@@ -36,7 +36,7 @@ app.use('/tasks', tasks);
 //END:ADDED
 
 //START:DB
-var config = require('.config.json');
+var config = require('./config.json');
 var dburl = config[app.get('env')].dburl;
 
 console.log('using database: ', dburl);
