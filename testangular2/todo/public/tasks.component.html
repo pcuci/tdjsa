@@ -6,16 +6,19 @@
     <input type="text" id="name" [(ngModel)]="newTask.name"/>
     <label>Date</label>
     <input type="text" id="date" [(ngModel)]="newTask.date"/>
-    <input type="submit" id="submit" (click)="addTask();" [disabled]="disableAddTask()" value="create"/>
+    <input type="submit" id="submit" (click)="addTask();"
+      [disabled]="disableAddTask()" value="create"/>
   </div>
-  <div id="tasksList">
-    <p>Number of tasks: <span id="length">{{tasks.length}}</span></p>
-    <span id="message">{{message}}</span>
+  <div id="taskslist">
+    <p>Number of tasks: <span id="length">{{ tasks.length }}</span>
+    <span id="message">{{ message }}</span>
     <table>
-      <tr *ngFor="let task of tasks">
-        <td>{{task.name}}</td>
-        <td>{{task.month}}/{{task.day}}/{{task.year}}</td>
-      </tr>
+      <tr *ngFor ="let task of tasks">
+      <td>{{ task.name }}</td>
+      <td>{{ task.month }}/{{ task.day }}/{{ task.year }}</td>
+      <td>
+        <a (click)="deleteTask(task._id);">delete</a>
+      </td>
     </table>
   </div>
 </body>

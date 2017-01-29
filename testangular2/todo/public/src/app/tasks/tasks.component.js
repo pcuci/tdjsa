@@ -46,6 +46,9 @@
     },
     disableAddTask: function() {
       return !this.validateTask(this.convertNewTaskToJSON());
+    },
+    deleteTask: function(taskId) {
+      this.service.delete(taskId).subscribe(this.updateMessage.bind(this), this.updateError.bind(this));
     }
   })
 })(window.app || (window.app = {}));

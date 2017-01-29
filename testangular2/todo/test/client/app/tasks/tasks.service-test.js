@@ -97,6 +97,22 @@ describe('tasks service tests', function() {
       }
     };
     expect(tasksService.extractData(response)).to.be.eql(fakeBody);
-  })
+  });
+
+  it('deleteTask registers service handlers', function() {
+    var sampleTaskId = '1234123412341234';
+    var observableMock = sandbox.moc(observable).expects('subscribe').withArgs(updateMessageBindStub, updateErrorBindStub);
+    sandbox.stub(tasksService, 'delete').withArgs(sampleTaskId).returns(observable);
+    tasksComponent.deleteTask(sampleTaskId);
+    observableMock.verify();
+  });
+
+  it('delete passes tasks to /tasks using DELETE', function() {
+    var taskId = '1234';
+    sandbox.stub(http, 'delete').withArgs('/tasks/' + taskId).returns(observable);
+    expect(tasksService.delete(taskId)).to.be.eql(observable);
+    expect(observable.map.calledWith(tasksService.extractData)).to.be.true;
+    expect(observable.catch.calledWith(tasksService.returnError)).to.be.true;
+  });
 
 });

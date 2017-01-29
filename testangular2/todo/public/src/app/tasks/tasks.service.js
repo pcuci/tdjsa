@@ -27,6 +27,9 @@
         })
       };
       return this.http.post('/tasks', JSON.stringify(task), options).map(this.extractData).catch(this.returnError);
+    },
+    delete: function(taskId) {
+      return this.http.delete('/tasks/' + taskId).map(this.extractData).catch(this.returnError);
     }
   });
 })(window.app || (window.app = {}));
