@@ -10,10 +10,23 @@
       if (response.status !== 200) {
         throw new Error('Request failed with status: ' + response.status);
       }
-      return response.json();
+      try {
+        return response.json();
+      } catch(ex) {
+        return response.text();
+      }
+
     },
     returnError: function(error) {
       return Rx.Observable.throw(error.message);
-    };
+    },
+    add: function(task) {
+      var options = {
+        headers: new ng.http.Headers({
+          'Content-Type': 'application/json'
+        })
+      };
+      return this.http.post('/tasks', JSON.stringify(task), options).map(this.extractData).catch(this.returnError);
+    }
   });
 })(window.app || (window.app = {}));

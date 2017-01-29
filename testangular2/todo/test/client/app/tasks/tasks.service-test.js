@@ -7,7 +7,8 @@ describe('tasks service tests', function() {
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
     http = {
-      get: function() {};
+      get: function() {},
+      post: function() {}
     };
 
     tasksService = new app.TasksService(http);
@@ -66,5 +67,36 @@ describe('tasks service tests', function() {
     var injectedServices = Reflect.getMetadata('parameters', app.TasksService);
     expect(injectedServices[0]).to.be.eql([ng.http.Http]);
   });
+
+  it('add passes task to /tasks using POST', function() {
+    var taskStub = {
+      name: 'foo',
+      month: 1,
+      day: 1,
+      year: 2017
+    };
+
+    var options = {
+      headers: new ng.http.Headers({
+        'content-Type': 'application/json'
+      })
+    };
+    sandbox.stub(http, 'post').withArgs('/tasks', JSON.stringify(taskStub), options).returns(observable);
+
+    expect(tasksService.add(taskStub)).to.be.eql(observable);
+    expect(observable.map.calledWith(tasksService.extractData)).to.be.true;
+    expect(observable.catch.calledWith(tasksService.returnError)).to.be.true;
+  });
+
+  it('extractData returns text if not json()', function() {
+    var fakeBody = 'somebody';
+    var response = {
+      status: 200,
+      text: function() {
+        return fakeBody;
+      }
+    };
+    expect(tasksService.extractData(response)).to.be.eql(fakeBody);
+  })
 
 });

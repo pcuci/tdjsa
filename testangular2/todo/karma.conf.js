@@ -19,6 +19,7 @@ module.exports = function(config) {
       'node_modules/rxjs/bundles/Rx.js',
       'node_modules/@angular/**/*.js',
       './test/client/**/*.js',
+      './public/javascripts/common/validate-task.js',
       './public/src/app/tasks/tasks-sort.pipe.js',
       './public/src/app/tasks/tasks.service.js',
       './public/src/app/tasks/tasks.component.js',

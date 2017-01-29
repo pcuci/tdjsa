@@ -8,9 +8,12 @@ describe('tasks component tests', function() {
   var updateTasksBindStub = function() {};
   var updateTasksBindStub = function() {};
   var updateErrorBindStub = function() {};
-  var sortPipe = { transform: function(data) {
-    return data;
-  }}
+  var sortPipe = {
+    transform: function(data) {
+      return data;
+    }
+  };
+  var updateMessageBindStub = function() {};
 
   beforeEach(function() {
     tasksService = {
@@ -26,6 +29,7 @@ describe('tasks component tests', function() {
 
     sandbox.stub(tasksComponent.updateError, 'bind').withArgs(tasksComponent).returns(updateErrorBindStub);
     sandbox.stub(tasksService, 'get').withArgs().returns(observable);
+    sandbox.stub(tasksComponent.updateMessage, 'bind').withArgs(tasksComponent).returns(updateMessageBindStub);
   });
 
   afterEach(function() {
@@ -90,6 +94,70 @@ describe('tasks component tests', function() {
     var injectedServices = Reflect.getMetadata('parameters', app.TasksComponent);
     expect(injectedServices[0]).to.be.eql([app.TasksService]);
     expect(injectedServices[1]).to.be.eql([app.TasksSortPipe]);
+  });
+
+  it('newTask initialized correctly', function() {
+    expect(tasksComponent.newTask.name).to.be.eql('');
+    expect(tasksComponent.newTask.date).to.be.eql('');
+  });
+
+  it('converts newTask with no data to JSON', function() {
+    var newTask = tasksComponent.convertNewTaskToJSON();
+    expect(newTask.name).to.be.eql('');
+    expect(newTask.month).to.be.NAN;
+    expect(newTask.day)to.be.NAN;
+    expect(newTask.year).to.be.NAN;
+  });
+
+  it('converts newTask with data to JSON', function() {
+    var newTask = {
+      name: 'task a',
+      date: '6/10/2016'
+    };
+    var newTaskJSON = {
+      name: 'task a',
+      month: 6,
+      day: 10,
+      year: 2016
+    };
+    tasksComponent.newTask = newTask;
+    expect(tasksComponent.convertNewTaskToJSON()).to.be.eql(newTaskJSON);
+  });
+
+  it('addTask registers service handlers', function() {
+    var observableMock = sandbox.mock(observable).expects('subscribe').withArgs(updateMessageBindStub, updateErrorBindStub);
+
+    var taskStub = {};
+    tasksComponent.convertNewTaskToJSON = function() {
+      return taskStub;
+    };
+
+    sandbox.stub(tasksService, 'add').withArgs(taskStub).returns(observable);
+
+    tasksComponent.addTask();
+    observableMock.verify();
+  });
+
+  it('updateMessage updates message and calls getTasks', function(done) {
+    tasksComponent.getTasks = function() {
+      done();
+    };
+    tasksComponent.updateMessage('good');
+    expect(tasksComponent.message).to.be.eql('good');
+  });
+
+  it('sets validateTask to common function', function() {
+    expect(tasksComponent.validateTask).to.be.eql(validateTask);
+  });
+
+  it('disableAddTask uses validateTask', function() {
+    tasksComponent.newTask = {
+      name: 'task a',
+      date: '6/10/2016'
+    };
+    var validateTaskSpy = sinon.spy(tasksComponent, 'validateTask');
+    expect(tasksComponent.disableAddTask()).to.be.false;
+    expect(validateTaskSpy).to.have.been.calledWith(tasksComponent.convertNewTaskToJSON());
   });
 
 });
