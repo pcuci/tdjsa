@@ -10,10 +10,10 @@
     "cover-client": "karma start --reporters clear-screen,dots,coverage --single-run"
   },
   "dependencies": {
-    "body-parser": "~1.15.1",
+    "body-parser": "~1.19.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
-    "express": "~4.16.0",
+    "express": "~4.17.3",
     "jade": "~1.11.0",
     "mongodb": "~2.2.20",
     "morgan": "~1.7.0",
