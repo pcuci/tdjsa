@@ -12,10 +12,10 @@
     "test-integration": "protractor"
   },
   "dependencies": {
-    "body-parser": "~1.15.1",
+    "body-parser": "~1.20.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
-    "express": "~4.13.4",
+    "express": "~4.21.0",
     "jade": "~1.11.0",
     "mongodb": "~2.1.13",
     "morgan": "~1.7.0",
