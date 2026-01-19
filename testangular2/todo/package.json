@@ -12,8 +12,8 @@
     "test-integration": "protractor"
   },
   "dependencies": {
-    "@angular/compiler": "2.4.5",
-    "@angular/core": "2.4.5",
+    "@angular/compiler": "19.2.18",
+    "@angular/core": "19.2.18",
     "@angular/common": "2.4.5",
     "@angular/forms": "2.4.5",
     "@angular/http": "2.4.5",
